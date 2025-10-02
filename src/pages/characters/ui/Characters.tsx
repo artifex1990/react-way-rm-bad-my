@@ -1,7 +1,7 @@
 import { useCharacters } from '@/pages/characters/model/use-characters';
-import { useFavorites } from '@/hooks/useFavorites';
 import { SearchBar } from '@/widgets/SearchBar/SearchBar';
 import { CharacterList } from '@/widgets/CharacterList/CharacterList';
+import { useFavorites } from '@/pages/favorites/model';
 
 export function Characters() {
 	const { query, setQuery, loading, items, error } = useCharacters();

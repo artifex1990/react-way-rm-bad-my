@@ -1,5 +1,5 @@
-import { useFavorites } from '@/hooks/useFavorites';
 import { CharacterList } from '@/widgets/CharacterList/CharacterList';
+import { useFavorites } from '../model';
 
 export function Favorites() {
 	const { list, isFavorite, toggleFavorite, clearFavorites } = useFavorites();

@@ -1,22 +1,22 @@
 import type { Character } from '@/shared/types/character';
 import { useCallback, useEffect, useState } from 'react';
-
-
-const LS_KEY = 'favorites_characters_v1';
+import { LS_KEY } from '../../../shared/constants';
+import useLocalStorage from '@/shared/lib/useLocalStorage';
 
 export function useFavorites() {
-	const [favorites, setFavorites] = useState<Record<number, Character>>(() => {
-		let favorites = [];
+	// const [favorites, setFavorites] = useState<Record<number, Character>>(() => {
+	// 	let favorites = [];
 
-		try {
-			const raw = localStorage.getItem(LS_KEY);
-			if (raw) favorites = JSON.parse(raw);
-		} catch (e) {
-			console.error('Failed to load favorites', e);
-		}
+	// 	try {
+	// 		const raw = localStorage.getItem(LS_KEY);
+	// 		if (raw) favorites = JSON.parse(raw);
+	// 	} catch (e) {
+	// 		console.error('Failed to load favorites', e);
+	// 	}
 
-		return favorites;
-	});
+	// 	return favorites;
+	// });
+	const [favorites, setFavorites] = useLocalStorage(LS_KEY, {});
 
 	useEffect(() => {
 		try {
@@ -43,8 +43,12 @@ export function useFavorites() {
 	const toggleFavorite = useCallback((char: Character) => {
 		setFavorites((prev) => {
 			const next = { ...prev };
-			if (next[char.id]) delete next[char.id];
-			else next[char.id] = char;
+			if (next[char.id]) {
+				delete next[char.id];
+			} else {
+				next[char.id] = char;
+			}
+
 			return next;
 		});
 	}, []);
